@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1344175450456814853}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.86, y: -1.86, z: -14.57}
+  m_LocalPosition: {x: -14.86, y: 1, z: -14.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -145,11 +145,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minion: {fileID: 3279106731384566062}
+  SquareOfMovement: 20
   xMin: -40
   xMax: 40
   zMin: -40
   zMax: 40
   closeEnough: 3
+  maxHealth: 3
 --- !u!114 &4281022744023528514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f996ee5abe96f4c81c514bde7ef0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  attackRange: 10
-  ren: {fileID: 7527570427103643386}
-  defaultMaterial: {fileID: 2100000, guid: 29240bb4bd8953d48bd7528c0fdd79f0, type: 2}
-  enemieAlert: {fileID: 2100000, guid: 44c209f918e61c54ab5aaa7277942340, type: 2}
+  attackRange: 15
+  attackCooldown: 3
+  damageAmount: 1

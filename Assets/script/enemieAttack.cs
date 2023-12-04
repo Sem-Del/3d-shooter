@@ -1,48 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class enemieAttack : MonoBehaviour
 {
-
+    public float attackRange = 10f; // Range within which the enemy can attack
+    public float attackCooldown = 3f; // Cooldown period between attacks
+    public int damageAmount = 1; // Amount of damage the enemy inflicts
+    private float currentCooldown = 0f; // Current cooldown time
     private Transform player;
-    public float attackRange = 10f;
-
-    public Renderer ren;
-    public Material defaultMaterial;
-    public Material enemieAlert;
-
     private enemie enemieScript;
     private bool foundPlayer;
 
-    // Start is called before the first frame update
     void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Vector3.Distance(transform.position, player.position) <= attackRange)
-        {
-            ren.sharedMaterial = enemieAlert;
-            enemieScript.minion.SetDestination(player.position);
-            foundPlayer = true;
-        }
-        else if (foundPlayer)
-        {
-            ren.sharedMaterial = defaultMaterial;
-            enemieScript.newLocation();
-            foundPlayer = false;
-        }
-    }
-
-    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemieScript = GetComponent<enemie>();
-        ren = GetComponent<Renderer>();
     }
 
+    void Update()
+    {
+        if (currentCooldown <= 0f)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= attackRange)
+            {
+                AttackPlayer();
+                currentCooldown = attackCooldown; // Reset cooldown
+            }
+        }
+        else
+        {
+            currentCooldown -= Time.deltaTime; // Reduce cooldown time
+        }
+    }
+
+    void AttackPlayer()
+    {
+        // Check if the player has a PlayerHealth script attached
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damageAmount); // Pass the damage amount to TakeDamage()
+        }
+    }
 }

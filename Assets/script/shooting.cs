@@ -1,20 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class shooting : MonoBehaviour
 {
-
     public Camera cam;
+    public int damageAmount = 1; // Amount of damage player's shot inflicts
 
     private RaycastHit hit;
     private Ray ray;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    public int enemyKillCount;
 
     // Update is called once per frame
     void Update()
@@ -24,9 +20,15 @@ public class shooting : MonoBehaviour
             ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.tag.Equals("npc"))
+                if (hit.collider.CompareTag("npc")) // Check the tag of the collider
                 {
-                    Destroy(hit.collider.gameObject);
+                    enemie enemyScript = hit.collider.GetComponent<enemie>();
+                    if (enemyScript != null)
+                    {
+                        // Call TakeDamage method of the enemy script
+                        enemyScript.TakeDamage(damageAmount);
+                        enemyKillCount++;
+                    }
                 }
             }
         }
