@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minion: {fileID: 3279106731384566062}
+  detectRange: 15
+  attackRange: 4
   SquareOfMovement: 20
   xMin: -40
   xMax: 40
@@ -152,6 +154,8 @@ MonoBehaviour:
   zMax: 40
   closeEnough: 3
   maxHealth: 3
+  enemyMaterial: {fileID: 2100000, guid: 29240bb4bd8953d48bd7528c0fdd79f0, type: 2}
+  enemyAlertMaterial: {fileID: 2100000, guid: 44c209f918e61c54ab5aaa7277942340, type: 2}
 --- !u!114 &4281022744023528514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +168,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f996ee5abe96f4c81c514bde7ef0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 15
   attackCooldown: 3
   damageAmount: 1

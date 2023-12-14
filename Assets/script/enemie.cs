@@ -25,7 +25,7 @@ public class enemie : MonoBehaviour
         xMin = zMin = -SquareOfMovement;
         xMax = zMax = SquareOfMovement;
         newLocation();
-        currentHealth = maxHealth; // Set initial health to maximum health
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -69,4 +69,3 @@ public class enemie : MonoBehaviour
         Destroy(gameObject);
     }
 }
-

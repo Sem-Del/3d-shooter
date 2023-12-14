@@ -1,65 +1,68 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 5;
-    public int currentHealth;
+    private int currentHealth;
+    public float enemyCooldownDuration = 3f; // Cooldown duration for enemies damaging the player
+    private float enemyCooldownTimer = 0f; // Timer for enemy cooldown
 
-    public Image[] hearths;
-    public Sprite full_hearth;
-    public Sprite deadth_hearth;
+    public Image[] hearts;
+    public Sprite fullHeartSprite;
+    public Sprite emptyHeartSprite;
 
     void Start()
     {
         currentHealth = maxHealth;
+        UpdateHealthUI();
     }
 
     void Update()
     {
-
-        if (currentHealth > maxHealth)
+        // Decrease enemy cooldown timer if it's active
+        if (enemyCooldownTimer > 0f)
         {
-            currentHealth = maxHealth;
+            enemyCooldownTimer -= Time.deltaTime;
         }
-
-        for (int i = 0; i < hearths.Length; i++)
+        if (currentHealth <= 0)
         {
-
-            if(i < currentHealth)
-            {
-                hearths[i].sprite = full_hearth;
-            }else
-            {
-                hearths[i].sprite = deadth_hearth;
-            }
-
-            if (i < maxHealth)
-            {
-                hearths[i].enabled = true;
-            }else
-            {
-                hearths[i].enabled = false;
-            }
+            RespawnPlayer(); // Respawn the player if health is zero or below
         }
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-
-        if (currentHealth < 1)
+        // Check if enemy cooldown is active
+        if (enemyCooldownTimer <= 0f)
         {
-            RespawnPlayer();
+            currentHealth -= damage;
+            UpdateHealthUI(); // Update health UI after taking damage
+
+            // Set the enemy cooldown timer when the player takes damage
+            enemyCooldownTimer = enemyCooldownDuration;
+        }
+    }
+
+    void UpdateHealthUI()
+    {
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < currentHealth)
+            {
+                hearts[i].sprite = fullHeartSprite;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeartSprite;
+            }
         }
     }
 
     void RespawnPlayer()
     {
         currentHealth = maxHealth; // Reset player health
-        transform.position = new Vector3(38.05f, 4.51f, 40.5f); // Teleport player to respawn position
+        transform.position = new Vector3(38f, 4.51f, 40.5f); // Teleport player to respawn position
+        UpdateHealthUI();
     }
-
-
 }

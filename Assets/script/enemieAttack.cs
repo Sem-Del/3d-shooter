@@ -1,14 +1,20 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class enemieAttack : MonoBehaviour
 {
-    public float attackRange = 10f; // Range within which the enemy can attack
-    public float attackCooldown = 3f; // Cooldown period between attacks
-    public int damageAmount = 1; // Amount of damage the enemy inflicts
-    private float currentCooldown = 0f; // Current cooldown time
+    public float attackRange = 3f;
+    public float attackCooldown = 3f;
+    public int damageAmount = 1;
+    private float currentCooldown = 0f;
+    public float detectRange = 15f;
+
     private Transform player;
     private enemie enemieScript;
     private bool foundPlayer;
+    private Renderer rend;
+    public Material enemy;
+    public Material enemieAlert;
 
     void Start()
     {
@@ -18,6 +24,16 @@ public class enemieAttack : MonoBehaviour
 
     void Update()
     {
+        //if (Vector3.Distance(transform.position, player.position) <= detectRange)
+        //{
+        //    rend.sharedMaterial = enemieAlert;
+        //    enemieScript.minion.SetDestination(player.position);
+        //    foundPlayer = true;
+        //}else{
+        //    enemieScript.newLocation();
+        //    foundPlayer = false; 
+        //    rend.sharedMaterial = enemy;
+        //}
         if (currentCooldown <= 0f)
         {
             if (Vector3.Distance(transform.position, player.position) <= attackRange)
@@ -34,7 +50,6 @@ public class enemieAttack : MonoBehaviour
 
     void AttackPlayer()
     {
-        // Check if the player has a PlayerHealth script attached
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {
